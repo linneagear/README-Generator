@@ -1,24 +1,40 @@
 function generateMarkdown(data) {
 
-  // This is where entire "html" will go, with title, features, etf.
+  // This is where entire README.md will reference, with title, description, features, etc.
   return `
+
 # ${data.title}
+<p> </p>
 
-## ${data.description}
+## Description
+${data.description}
+<p> </p>
 
-## ${data.tableContents}
+## Table of Contents
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
 
-## ${data.Installation}
+## Installation
+<p> ${data.Installation}</p>
 
-## ${data.usage}
+## Usage
+<p> ${data.usage}</p>
 
-## ${data.license}
+## License
+<p>${data.license}</p>
 
-## ${data.contributing}
+## Contributors
+<p>${data.contributing} </p>
 
-## ${data.tests}
+## Test 
+<p> ${data.tests}</p>
 
-## ${data.questions}
+## Questions
+<p>${data.questions}</p>
 
 `;
 }

@@ -2,6 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 
+// removed this built in constant:
 const questions = [
     {
         type: "input",
@@ -15,12 +16,12 @@ const questions = [
       },
       {
         type: "input",
-        name: "name",
+        name: "title",
         message: "What is your project title?"
       },
       {
         type: "input",
-        name: "name",
+        name: "description",
         message: "What is your project description?"
       },
       {
@@ -35,9 +36,17 @@ const questions = [
         message: "How does a user use your application?"
       },
       {
-        type: "input",
+        type: "list",
         name: "license",
-        message: "What license would you like to use? (Ex: MIT, GPL 3.0) If you do not wish to use a license, write 'none.'"
+        message: "Choose a license for this project:",
+        choices: [
+            "Apache 2.8",
+            "MIT",
+            "GPL v3",
+            "Mozilla Public 2.0",
+            "Boost Software 1.0",
+            "None"
+          ]
       },
       {
         type: "input",
@@ -49,32 +58,40 @@ const questions = [
         type: "input",
         name: "tests",
         message: "Write any tests done here: "
-      },
-];
+      }
+    ]
 
-function writeToFile(fileName, data) {
+inquirer
+.prompt([...questions]).then(function() {
+    console.log("success");
 
+//   const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
 
-}
-
-function init() {
-
-    inquirer
-    .prompt([questions])
-    .then(function(response) {
-      const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+//   axios.get(queryUrl).then(function(res) {
+//     const repoNames = res.data.map(function(repo) {
+//     return repo.name;
   
-      axios.get(queryUrl).then(function(res) {
-        const repoNames = res.data.map(function(repo) {
-          console.log(repo.name);
+
+//       if (err) {
+//         return console.log(err);
+//       }
   
+//       console.log("Success!");
   
-        });
-      })
-  });
+//     })
+//     })
+});
 
-}
+// function writeToFile(fileName, data) {
+//     const fileName = "C:\DOCUMENT\BUDGET.XLS"
 
-// util.generateMarkdown()
+//     // generateMarkdown()
+// }
 
-init();
+// function init() {
+
+
+
+// }
+
+// init();
