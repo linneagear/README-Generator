@@ -3,7 +3,7 @@ const util = require("util");
 const axios = require("axios");
 const inquirer = require("inquirer");
 
-const writeFileAsync = util.promisify(fs.writeFile);
+const genMarkdown = require('./utils/generateMarkdown.js')
 
 const questions = [
     {
@@ -39,6 +39,7 @@ const questions = [
     {
         type: "list",
         name: "license",
+        // have badge of number for license
         message: "Choose a license for this project:",
         choices: [
             "Apache 2.8",
@@ -52,7 +53,6 @@ const questions = [
     {
         type: "input",
         name: "contributing",
-        // have badge of number of contributors
         message: "What users contributed? Be sure to enter their urls in http format."
     },
     {
@@ -62,44 +62,49 @@ const questions = [
     }
 ]
 
-  
+// console.log("success");
+// the above was successful
 
-    // console.log("success");
-    // the above was successful
 
-function writeToFile(fileName, data) {
-   const markdown = utils.generateMarkdown(data)
-    
-    return writeFileAsync("README.md", markdown);
+function writeToFile(data) {
+    // want to save the markdown file to the repo
+    fs.writeFile("README.md", data, function (err) {
+        if (err) {
+            throw err;
+        }
+       console.log('README created');
+        })
+    // const markdown = utils.generateMarkdown(data)
+    // return writeFileAsync("README.md", markdown);
 
 }
 
 function init() {
-    inquirer
-    .prompt([...questions])
-    .then(function ({ username, repo }) {
+    return inquirer
+        .prompt([...questions])
+        // .then(function ({ username, repo }) {
 
-        // don't want ALL repos, just the one link. Keeps saying repo is undefined??
-        const queryUrl = `https://api.github.com/repos/${username}/${repo}`
-        return axios.get(queryUrl)
-        })
-        .then(function(res) {
-            // returns README-Generator
-            const repoName = res.data.name
-        })
-
-            // fs.writeFile("README.md", repoURL, function (err) {
-            //     if (err) {
-            //         throw err;
-            //     }
-            //     // saved ALL of my repos.....
-            //     console.log(`Saved ${repoURL}`);
-            // });
-        
-        .catch(function(err) {
-            console.log(err);
-        });   
+        //     // don't want ALL repos, just the one link. Keeps saying repo is undefined??
+        //     const queryUrl = `https://api.github.com/repos/${username}/${repo}`
+        //     return axios.get(queryUrl)
+        // })
+        // .then(function (res) {
+        //     // returns README-Generator
+        //     const repoName = res.data.name
+        // })       
+        // .then(function() {
+        //     writeToFile()
+        // })
+        // .catch(function (err) {
+        //     console.log(err);
+        // });
 
 }
 
 init()
+    .then(function(data) {
+        return generateMarkdown(data)
+    })
+    .then(function(data) {
+        return writeToFile(data)
+    })

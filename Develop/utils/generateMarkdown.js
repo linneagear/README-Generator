@@ -19,7 +19,7 @@ ${data.description}
 * [Questions](#questions)
 
 ## Installation
-<p> ${data.Installation}</p>
+<p> ${data.install}</p>
 
 ## Usage
 <p> ${data.usage}</p>
@@ -32,10 +32,6 @@ ${data.description}
 
 ## Test 
 <p> ${data.tests}</p>
-
-## Questions
-<p>${data.questions}</p>
-
 `;
 }
 
