@@ -1,41 +1,42 @@
 const fs = require("fs");
+const util = require("util");
 const axios = require("axios");
 const inquirer = require("inquirer");
 
-// removed this built in constant:
+const writeFileAsync = util.promisify(fs.writeFile);
+
 const questions = [
     {
         type: "input",
         name: "username",
         message: "What is your Github username?"
-      },
-      {
+    },
+    {
         type: "input",
         name: "repo",
-        message: "What is the url of your repo?"
-      },
-      {
+        message: "What is the url of the repo you'd like to append to?"
+    },
+    {
         type: "input",
         name: "title",
         message: "What is your project title?"
-      },
-      {
+    },
+    {
         type: "input",
         name: "description",
         message: "What is your project description?"
-      },
-      {
+    },
+    {
         type: "input",
         name: "install",
         message: "How does a user install your application?"
-        // inquirer, fs, axios
-      },
-      {
+    },
+    {
         type: "input",
         name: "usage",
         message: "How does a user use your application?"
-      },
-      {
+    },
+    {
         type: "list",
         name: "license",
         message: "Choose a license for this project:",
@@ -46,52 +47,59 @@ const questions = [
             "Mozilla Public 2.0",
             "Boost Software 1.0",
             "None"
-          ]
-      },
-      {
+        ]
+    },
+    {
         type: "input",
         name: "contributing",
         // have badge of number of contributors
-        message: "How many users contributed?"
-      },
-      {
+        message: "What users contributed? Be sure to enter their urls in http format."
+    },
+    {
         type: "input",
         name: "tests",
         message: "Write any tests done here: "
-      }
-    ]
+    }
+]
 
-inquirer
-.prompt([...questions]).then(function() {
-    console.log("success");
-
-//   const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
-
-//   axios.get(queryUrl).then(function(res) {
-//     const repoNames = res.data.map(function(repo) {
-//     return repo.name;
   
 
-//       if (err) {
-//         return console.log(err);
-//       }
-  
-//       console.log("Success!");
-  
-//     })
-//     })
-});
+    // console.log("success");
+    // the above was successful
 
-// function writeToFile(fileName, data) {
-//     const fileName = "C:\DOCUMENT\BUDGET.XLS"
+function writeToFile(fileName, data) {
+   const markdown = utils.generateMarkdown(data)
+    
+    return writeFileAsync("README.md", markdown);
 
-//     // generateMarkdown()
-// }
+}
 
-// function init() {
+function init() {
+    inquirer
+    .prompt([...questions])
+    .then(function ({ username, repo }) {
 
+        // don't want ALL repos, just the one link. Keeps saying repo is undefined??
+        const queryUrl = `https://api.github.com/repos/${username}/${repo}`
+        return axios.get(queryUrl)
+        })
+        .then(function(res) {
+            // returns README-Generator
+            const repoName = res.data.name
+        })
 
+            // fs.writeFile("README.md", repoURL, function (err) {
+            //     if (err) {
+            //         throw err;
+            //     }
+            //     // saved ALL of my repos.....
+            //     console.log(`Saved ${repoURL}`);
+            // });
+        
+        .catch(function(err) {
+            console.log(err);
+        });   
 
-// }
+}
 
-// init();
+init()
