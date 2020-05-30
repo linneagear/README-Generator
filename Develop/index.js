@@ -1,9 +1,8 @@
 const fs = require("fs");
-const util = require("util");
-const axios = require("axios");
 const inquirer = require("inquirer");
 
-const genMarkdown = require('./utils/generateMarkdown.js')
+// need to have the correct pathway to grab the JS file
+const generateMarkdown = require('./utils/generateMarkdown.js')
 
 const questions = [
     {
@@ -65,18 +64,14 @@ const questions = [
 // console.log("success");
 // the above was successful
 
-
 function writeToFile(data) {
     // want to save the markdown file to the repo
     fs.writeFile("README.md", data, function (err) {
         if (err) {
             throw err;
         }
-       console.log('README created');
-        })
-    // const markdown = utils.generateMarkdown(data)
-    // return writeFileAsync("README.md", markdown);
-
+        console.log('README created');
+    })
 }
 
 function init() {
@@ -88,23 +83,17 @@ function init() {
         //     const queryUrl = `https://api.github.com/repos/${username}/${repo}`
         //     return axios.get(queryUrl)
         // })
-        // .then(function (res) {
-        //     // returns README-Generator
-        //     const repoName = res.data.name
-        // })       
-        // .then(function() {
-        //     writeToFile()
-        // })
-        // .catch(function (err) {
-        //     console.log(err);
-        // });
 
-}
+        .catch(function (err) {
+            console.log(err);
+        });
+    }
 
+// how does it know what this data is?
 init()
-    .then(function(data) {
+    .then(function (data) {
         return generateMarkdown(data)
     })
-    .then(function(data) {
+    .then(function (data) {
         return writeToFile(data)
     })

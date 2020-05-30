@@ -1,14 +1,10 @@
 function generateMarkdown(data) {
-
   // This is where entire README.md will reference, with title, description, features, etc.
   return `
-
 # ${data.title}
-<p> </p>
 
 ## Description
 ${data.description}
-<p> </p>
 
 ## Table of Contents
 * [Installation](#installation)
@@ -25,7 +21,8 @@ ${data.description}
 <p> ${data.usage}</p>
 
 ## License
-<p>${data.license}</p>
+![badge](https://img.shileds.io/badge/${data.license})
+(https://img.shields.io/badge/License-${data.license}.svg)](https://shields.io/)
 
 ## Contributors
 <p>${data.contributing} </p>
