@@ -1,6 +1,7 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 
+
 // need to have the correct pathway to grab the JS file
 const generateMarkdown = require('./utils/generateMarkdown.js')
 
@@ -13,7 +14,7 @@ const questions = [
     {
         type: "input",
         name: "repo",
-        message: "What is the url of the repo you'd like to append to?"
+        message: "What is the name of the repo you'd like to append to?"
     },
     {
         type: "input",
@@ -41,18 +42,16 @@ const questions = [
         // have badge of number for license
         message: "Choose a license for this project:",
         choices: [
-            "Apache 2.8",
+            "AGPL",
             "MIT",
-            "GPL v3",
-            "Mozilla Public 2.0",
-            "Boost Software 1.0",
+            "GPLv3",
             "None"
         ]
     },
     {
         type: "input",
         name: "contributing",
-        message: "What users contributed? Be sure to enter their urls in http format."
+        message: "What other users contributed?"
     },
     {
         type: "input",
@@ -89,7 +88,7 @@ function init() {
         });
     }
 
-// how does it know what this data is?
+// call the init function to start
 init()
     .then(function (data) {
         return generateMarkdown(data)

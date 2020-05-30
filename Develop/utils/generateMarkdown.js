@@ -21,11 +21,10 @@ ${data.description}
 <p> ${data.usage}</p>
 
 ## License
-![badge](https://img.shileds.io/badge/${data.license})
-(https://img.shields.io/badge/License-${data.license}.svg)](https://shields.io/)
+![License](https://img.shields.io/badge/license-${data.license}-blue)
 
 ## Contributors
-<p>${data.contributing} </p>
+<p>${data.contributing}</p>
 
 ## Test 
 <p> ${data.tests}</p>
