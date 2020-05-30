@@ -28,7 +28,7 @@ ${data.description}
 
 ## Test 
 <p> ${data.tests}</p>
-`;
+`
 }
 
 module.exports = generateMarkdown;
